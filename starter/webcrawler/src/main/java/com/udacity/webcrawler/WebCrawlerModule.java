@@ -8,6 +8,7 @@ import com.google.inject.multibindings.Multibinder;
 import com.udacity.webcrawler.json.CrawlerConfiguration;
 import com.udacity.webcrawler.parser.ParserModule;
 import com.udacity.webcrawler.profiler.Profiler;
+import com.udacity.webcrawler.tasks.RecursiveTaskImpl;
 
 import javax.inject.Qualifier;
 import javax.inject.Singleton;

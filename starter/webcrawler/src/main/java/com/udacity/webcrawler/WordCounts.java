@@ -3,13 +3,13 @@ package com.udacity.webcrawler;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 /**
  * Utility class that sorts the map of word counts.
  *
  * <p>TODO: Reimplement the sort() method using only the Stream API and lambdas and/or method
- *          references.
+ * references.
  */
 final class WordCounts {
 
@@ -19,7 +19,7 @@ final class WordCounts {
    * {@param popluarWordCount} words and counts.
    *
    * <p>TODO: Reimplement this method using only the Stream API and lambdas and/or method
-   *          references.
+   * references.
    *
    * @param wordCounts       the unsorted map of word counts.
    * @param popularWordCount the number of popular words to include in the result map.
@@ -29,15 +29,27 @@ final class WordCounts {
 
     // TODO: Reimplement this method using only the Stream API and lambdas and/or method references.
 
-    PriorityQueue<Map.Entry<String, Integer>> sortedCounts =
-        new PriorityQueue<>(wordCounts.size(), new WordCountComparator());
-    sortedCounts.addAll(wordCounts.entrySet());
-    Map<String, Integer> topCounts = new LinkedHashMap<>();
-    for (int i = 0; i < Math.min(popularWordCount, wordCounts.size()); i++) {
-      Map.Entry<String, Integer> entry = sortedCounts.poll();
-      topCounts.put(entry.getKey(), entry.getValue());
-    }
-    return topCounts;
+//    PriorityQueue<Map.Entry<String, Integer>> sortedCounts =
+//        new PriorityQueue<>(wordCounts.size(), new WordCountComparator());
+//    sortedCounts.addAll(wordCounts.entrySet());
+//    Map<String, Integer> topCounts = new LinkedHashMap<>();
+//    for (int i = 0; i < Math.min(popularWordCount, wordCounts.size()); i++) {
+//      Map.Entry<String, Integer> entry = sortedCounts.poll();
+//      topCounts.put(entry.getKey(), entry.getValue());
+//    }
+
+    var comparator = new WordCountComparator();
+
+    return wordCounts.entrySet()
+        .stream()
+        .sorted(comparator)
+        .limit(popularWordCount)
+        .collect(Collectors.toMap(
+        Map.Entry::getKey,
+        Map.Entry::getValue,
+        (v1, v2) -> {throw new IllegalStateException("YOUR MESSAGE HERE");},
+        LinkedHashMap::new
+    ));
   }
 
   /**

@@ -1,5 +1,7 @@
 package com.udacity.webcrawler.json;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Objects;
 /**
  * Data class representing the final result of a web crawl.
  */
+@JsonSerialize
 public final class CrawlResult {
 
   private final Map<String, Integer> wordCounts;
