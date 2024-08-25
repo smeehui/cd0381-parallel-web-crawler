@@ -47,7 +47,7 @@ public final class ConfigurationLoader {
     // This is here to get rid of the unused variable warning.
     try {
       Objects.requireNonNull(reader);
-      var objectMapper = new ObjectMapper();
+      var objectMapper = new ObjectMapper().findAndRegisterModules();
       var stringBuilder = new StringBuilder();
       char[] data = new char[10];
       while (reader.read(data) != -1) {

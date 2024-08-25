@@ -37,12 +37,21 @@ public final class WebCrawlerMain {
 
     CrawlResult result = crawler.crawl(config.getStartPages());
     CrawlResultWriter resultWriter = new CrawlResultWriter(result);
-    if (!config.getProfileOutputPath().isEmpty()){
+
+    // TODO: Write the crawl results to a JSON file (or System.out if the file name is empty)
+    // TODO: Write the profile data to a text file (or System.out if the file name is empty)
+
+    if (!config.getResultPath().isEmpty()){
       resultWriter.write(Path.of(config.getResultPath()));
     }else {
       resultWriter.write(System.console().writer());
     }
-    // TODO: Write the profile data to a text file (or System.out if the file name is empty)
+
+    if (!config.getProfileOutputPath().isEmpty()){
+      profiler.writeData(Path.of(config.getProfileOutputPath()));
+    }else {
+      profiler.writeData(System.console().writer());
+    }
   }
 
   public static void main(String[] args) throws Exception {

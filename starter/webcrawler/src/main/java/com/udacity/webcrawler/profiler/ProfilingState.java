@@ -1,5 +1,7 @@
 package com.udacity.webcrawler.profiler;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Method;
@@ -15,6 +17,10 @@ import java.util.stream.Collectors;
  */
 final class ProfilingState {
   private final Map<String, Duration> data = new ConcurrentHashMap<>();
+
+  public Map<String, Duration> getData() {
+    return data;
+  }
 
   /**
    * Records the given method invocation data.
