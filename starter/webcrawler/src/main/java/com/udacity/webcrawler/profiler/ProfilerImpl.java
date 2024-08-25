@@ -33,12 +33,9 @@ final class ProfilerImpl implements Profiler {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public <T> T wrap(Class<T> klass, T delegate) {
     Objects.requireNonNull(klass);
-    // TODO: Use a dynamic proxy (java.lang.reflect.Proxy) to "wrap" the delegate in a
-    //       ProfilingMethodInterceptor and return a dynamic proxy from this method.
-    //       See https://docs.oracle.com/javase/10/docs/api/java/lang/reflect/Proxy.html.
-
     if (!hasProfiledMethod(klass)) {
       throw new IllegalArgumentException("The class " + klass.getName() + " does not have a profiler method");
     }
@@ -59,9 +56,6 @@ final class ProfilerImpl implements Profiler {
 
   @Override
   public void writeData(Path path) {
-    // TODO: Write the ProfilingState data to the given file path. If a file already exists at that
-    //       path, the new data should be appended to the existing file.
-
     Objects.requireNonNull(path);
     var options = new OpenOption[]{StandardOpenOption.CREATE, StandardOpenOption.APPEND};
     try (var writer = new BufferedWriter(Files.newBufferedWriter(path, StandardCharsets.UTF_8, options))) {
